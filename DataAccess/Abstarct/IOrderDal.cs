@@ -6,8 +6,7 @@ using System.Text;
 
 namespace DataAccess.Abstarct
 {
-    public interface IBookDal:IEntityRepository<Book>
+    public interface IOrderDal:IEntityRepository<Order>
     {
-
     }
 }
