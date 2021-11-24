@@ -10,24 +10,28 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-         
+            BookTest();
 
-            //BookTest(bookManager);
+            //CATEGORYTEST();
 
+        }
+
+        private static void CATEGORYTEST()
+        {
             CategoryManager categoryManager = new CategoryManager(new EfCategoryDal());
             foreach (var category in categoryManager.GetAll())
             {
                 Console.WriteLine(category.CategoryName);
             }
-           
-
         }
 
-        private static void BookTest(BookManager bookManager)
+        private static void BookTest()
+            
         {
-            foreach (var book in bookManager.GetAll())
+            BookManager bookManager = new BookManager(new EfBookDal());
+            foreach (var book in bookManager.GetBookDetails())
             {
-                Console.WriteLine(book.BookName);
+                Console.WriteLine(book.BookName + "/" + book.CategoryName);
             }
         }
     }

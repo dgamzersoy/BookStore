@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstarct;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -38,6 +39,9 @@ namespace Business.Concrete
             return _bookDal.GetAll(b => b.CategoryId == categoryId);
         }
 
-  
+        public List<BookDetailDto> GetBookDetails()
+        {
+            return _bookDal.GetBookDetails();
+        }
     }
 }
