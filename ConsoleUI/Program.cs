@@ -10,7 +10,7 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            BookTest();
+           // BookTest();
 
             //CATEGORYTEST();
 
@@ -29,10 +29,7 @@ namespace ConsoleUI
             
         {
             BookManager bookManager = new BookManager(new EfBookDal());
-            foreach (var book in bookManager.GetBookDetails())
-            {
-                Console.WriteLine(book.BookName + "/" + book.CategoryName);
-            }
+          
         }
     }
 }

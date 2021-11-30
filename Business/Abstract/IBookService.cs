@@ -1,4 +1,5 @@
-﻿using Entities.Concrete;
+﻿using Core.Utilities.Results;
+using Entities.Concrete;
 using Entities.DTOs;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,17 @@ namespace Business.Abstract
 {
    public interface IBookService
     {
-        List<Book> GetAll();
-        List<Book> GetAllByCategory(int categoryId);
+        IDataResult<List<Book>> GetAll();
 
-        void Add(Book book);
-        List<BookDetailDto> GetBookDetails();
+        IDataResult<Book> GetBookByCategoryId(int categoryId);
+
+        IResult Add(Book book);
+        IResult Update(Book book);
+        IResult Delete(Book book);
+      
+        IDataResult<List<BookDetailDto>> GetBookDetails();
+
+        IDataResult<Book> GetById(int id);
+    
     }
 }

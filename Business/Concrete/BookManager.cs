@@ -1,4 +1,6 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results;
 using DataAccess.Abstarct;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -17,31 +19,51 @@ namespace Business.Concrete
             _bookDal = bookDal;
         }
 
-        public void Add(Book book)
+        public IResult Add(Book book)
         {
             if (book.UnitPrice <= 0 || book.BookName.Length <= 2)
             {
-                Console.WriteLine("Eksik giriş yaptınız");
+                return new ErrorResult(Messages.BookNameInvalid);
             }
-            else
-            {
+      
                 _bookDal.Add(book);
+
+            return new SuccessResult(Messages.BookAdded);
+        }
+
+        public IResult Delete(Book book)
+        {
+            return new SuccessResult(Messages.BookDeleted);
+        }
+
+        public IDataResult< List<Book>> GetAll()
+        {
+            if(DateTime.Now.Hour == 22)
+            {
+                return new ErrorDataResult<List<Book>>(Messages.MaintenanceTime);
             }
+            return new SuccessDataResult<List<Book>>(_bookDal.GetAll());
         }
 
-        public List<Book> GetAll()
+
+        public IDataResult<Book> GetBookByCategoryId(int categoryId)
         {
-            return _bookDal.GetAll();
+            return new SuccessDataResult<Book>(_bookDal.Get(b => b.CategoryId == categoryId));
         }
 
-        public List<Book> GetAllByCategory(int categoryId)
+        public IDataResult<List<BookDetailDto>> GetBookDetails()
         {
-            return _bookDal.GetAll(b => b.CategoryId == categoryId);
+            return new SuccessDataResult<List<BookDetailDto>>( _bookDal.GetBookDetails());
         }
 
-        public List<BookDetailDto> GetBookDetails()
+        public IDataResult< Book> GetById(int id)
         {
-            return _bookDal.GetBookDetails();
+            return new SuccessDataResult<Book> (_bookDal.Get(b=>b.Id==id));
+        }
+
+        public IResult Update(Book book)
+        {
+            return new SuccessResult(Messages.BookUpdated);
         }
     }
 }
