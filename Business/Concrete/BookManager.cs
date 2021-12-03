@@ -1,5 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstarct;
 using Entities.Concrete;
@@ -19,13 +21,10 @@ namespace Business.Concrete
             _bookDal = bookDal;
         }
 
+        [ValidationAspect(typeof(BookValidator))]
         public IResult Add(Book book)
         {
-            if (book.UnitPrice <= 0 || book.BookName.Length <= 2)
-            {
-                return new ErrorResult(Messages.BookNameInvalid);
-            }
-      
+           
                 _bookDal.Add(book);
 
             return new SuccessResult(Messages.BookAdded);
